@@ -1,6 +1,8 @@
 using PortfolioApi.Models;
 
-interface IPortfolioRepository
+namespace PortfolioRepositoryInterface;
+
+public interface IPortfolioRepository
 {
     IEnumerable<Portfolio> GetAll();
     Portfolio? GetPortfolio(Guid id);

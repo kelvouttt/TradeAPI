@@ -1,9 +1,8 @@
-using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApi.Mappings;
+using PortfolioRepositoryInterface;
 using PortfolioApi.Models;
-using TradeInterfaceApi.Data;
+
 
 namespace PortfolioApi.Controllers;
 
@@ -11,64 +10,60 @@ namespace PortfolioApi.Controllers;
 [Route("api/[controller]")]
 public class PortfolioController : ControllerBase
 {
-    private readonly TradeDbContext _context;
+    private readonly IPortfolioRepository _repo;
 
-    public PortfolioController(TradeDbContext context)
+    public PortfolioController(IPortfolioRepository repo)
     {
-        _context = context;
+        _repo = repo;
     }
 
-    [HttpPost]
-    public IActionResult CreatePortfolio([FromBody] Portfolio portfolio)
+    [HttpGet]
+    public IActionResult GetAll()
     {
-        portfolio.Id = Guid.NewGuid();
-        portfolio.PortfolioCreation = DateTime.UtcNow;
+        var portfolios = _repo.GetAll();
+        var dtoResult = portfolios.Select(p => p.ToDto()).ToList();
 
-        _context.Portfolios.Add(portfolio);
-        _context.SaveChanges();
+        return Ok(dtoResult);
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult GetPortfolio(Guid id)
+    {
+        var portfolio = _repo.GetPortfolio(id);
+        if (portfolio == null)
+            return NotFound();
 
         return Ok(portfolio.ToDto());
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetPortfolioById(Guid id)
+    [HttpPost]
+    public IActionResult CreatePortfolio(Portfolio portfolio)
     {
-        var portfolio = _context.Portfolios.FirstOrDefault(p => p.Id == id);
-        if (portfolio == null)
-            return NotFound();
+        portfolio.Id = Guid.NewGuid();
+        portfolio.PortfolioCreation = DateTime.UtcNow;
+        _repo.Add(portfolio);
 
         return Ok(portfolio);
     }
 
-    [HttpGet]
-    public IActionResult GetAllPortfolios()
-    {
-        var portfolios = _context.Portfolios
-            .Include(p => p.Trades)
-            .ToList();
-        var portfolioDtos = portfolios.Select(p => p.ToDto()).ToList();
-        return Ok(portfolioDtos);
-    }
-
     [HttpDelete("{id}")]
-    public IActionResult DeletePortfolio(Guid id)
+    public IActionResult RemovePortfolio(Guid id)
     {
         try
         {
-            var portfolio = _context.Portfolios.FirstOrDefault(p => p.Id == id);
+            var portfolio = _repo.GetPortfolio(id);
             if (portfolio == null)
             {
-                return NotFound($"Portfolio {portfolio?.PortfolioName} not found!");
+                return NotFound();
             }
 
-            _context.Portfolios.Remove(portfolio);
-            _context.SaveChanges();
+            _repo.Delete(portfolio);
 
-            return StatusCode(StatusCodes.Status204NoContent, "Portfolio has been removed!");
+            return StatusCode(StatusCodes.Status204NoContent);
         }
         catch (Exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting portfolio.");
+            return NotFound();
         }
     }
 }

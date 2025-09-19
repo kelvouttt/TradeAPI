@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using PortfolioApi.Models;
+using PortfolioRepositoryInterface;
 using TradeInterfaceApi.Data;
 
 namespace PortfolioApi.Repository;
@@ -14,12 +16,17 @@ public class PortfolioRepository : IPortfolioRepository
 
     public IEnumerable<Portfolio> GetAll()
     {
-        return _context.Portfolios.ToList();
+        return _context
+        .Portfolios
+        .Include(p => p.Trades)
+        .ToList();
     }
 
     public Portfolio? GetPortfolio(Guid id)
     {
-        return _context.Portfolios.FirstOrDefault(p => p.Id == id);
+        return _context.Portfolios
+        .Include(p => p.Trades)
+        .FirstOrDefault(p => p.Id == id);
     }
 
     public void Add(Portfolio portfolio)
