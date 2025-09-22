@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using TradeInterfaceApi.Data;
 using PortfolioApi.Repository;
 using PortfolioRepositoryInterface;
+using TradeRepositoryInterface;
+using TradeApi.Repository;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +19,8 @@ builder.Services.AddDbContext<TradeDbContext>(options =>
 builder.Services.AddControllers();
 
 // Registering the repository
-builder.Services.AddScoped<IPortfolioRepository,PortfolioRepository>();
+builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+builder.Services.AddScoped<ITradeRepository, TradeRepository>();
 
 var app = builder.Build();
 
