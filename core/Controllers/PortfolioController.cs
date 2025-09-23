@@ -18,7 +18,7 @@ public class PortfolioController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public IActionResult GetAllPortfolios()
     {
         var portfolios = _repo.GetAll();
         var dtoResult = portfolios.Select(p => p.ToDto()).ToList();
