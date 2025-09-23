@@ -35,4 +35,33 @@ public class TradeController : ControllerBase
         var trade = _repo.GetTrade(id);
         return Ok(trade);
     }
+
+    [HttpPost]
+    public IActionResult CreateTrade(Trade trade)
+    {
+        _repo.Add(trade);
+
+        return Ok(trade);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult RemoveTrade(Guid id)
+    {
+        try
+        {
+            var trade = _repo.GetTrade(id);
+            if (trade == null)
+            {
+                return NotFound();
+            }
+
+            _repo.Delete(trade);
+
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
+        catch (Exception)
+        {
+            return NotFound();
+        }
+    }
 }
