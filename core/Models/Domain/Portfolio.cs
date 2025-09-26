@@ -1,6 +1,6 @@
-using TradeApi.Models;
+using Models.Domain.TradeAPI;
 
-namespace PortfolioApi.Models;
+namespace Models.Domain.PortfolioAPI;
 
 public class Portfolio
 {

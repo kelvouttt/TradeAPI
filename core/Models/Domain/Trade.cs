@@ -1,7 +1,6 @@
-using System.Text.Json.Serialization;
-using PortfolioApi.Models;
+using Models.Domain.PortfolioAPI;
 
-namespace TradeApi.Models;
+namespace Models.Domain.TradeAPI;
 
 public class Trade
 {

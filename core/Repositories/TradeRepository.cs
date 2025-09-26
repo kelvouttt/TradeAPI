@@ -1,15 +1,15 @@
-using Microsoft.EntityFrameworkCore;
-using TradeApi.Models;
-using TradeInterfaceApi.Data;
-using TradeRepositoryInterface;
+using Models.Domain.TradeAPI;
+using Data.AppDbContext;
+using Repositories.TradeAPIInterface;
 
-namespace TradeApi.Repository;
+
+namespace Repositories.TradeAPI;
 
 public class TradeRepository : ITradeRepository
 {
-    private readonly TradeDbContext _context;
+    private readonly AppDbContext _context;
 
-    public TradeRepository(TradeDbContext context)
+    public TradeRepository(AppDbContext context)
     {
         _context = context;
     }
@@ -41,7 +41,7 @@ public class TradeRepository : ITradeRepository
 
         // Now we check if there is last trade / any trades in the database AND check if the length of the TradeId has a length longer than 1.
         if (lastTrade != null && lastTrade.TradeId.Length > 1)
-        {   
+        {
             // Substring of 1 cuts the prefix 'T' and leave the rest numbers (e.g., 00012 / 00421)
             string numberPart = lastTrade.TradeId.Substring(1);
             // int.TryParse will check if the input is a digit 0-9, and convert to integer stored as lastNumber

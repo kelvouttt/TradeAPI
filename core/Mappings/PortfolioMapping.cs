@@ -1,8 +1,8 @@
-using PortfolioApi.Models;
-using PortfolioApi.Dtos;
-using TradeApi.Mappings;
+using Models.Domain.PortfolioAPI;
+using Models.Dtos.PortfolioApi;
+using Mappings.TradeAPI;
 
-namespace PortfolioApi.Mappings;
+namespace Mappings.PortfolioAPI;
 
 public static class PortfolioApiMapping
 {

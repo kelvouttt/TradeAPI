@@ -1,11 +1,7 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using TradeApi.Models;
-using TradeApi.Mappings;
-using TradeInterfaceApi.Data;
-using Microsoft.EntityFrameworkCore;
-using TradeRepositoryInterface;
-using TradeApi.Repository;
+using Models.Domain.TradeAPI;
+using Repositories.TradeAPIInterface;
+
 
 namespace TradeInterfaceApi.Controllers;
 

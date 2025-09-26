@@ -1,6 +1,7 @@
-using TradeApi.Models;
+using Models.Domain.TradeAPI;
 
-namespace TradeRepositoryInterface;
+
+namespace Repositories.TradeAPIInterface;
 
 public interface ITradeRepository
 {

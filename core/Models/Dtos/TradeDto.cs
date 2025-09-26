@@ -1,4 +1,5 @@
-namespace TradeApi.Dtos;
+namespace Models.Dtos.TradeAPI;
+
 
 public class TradeDto
 {

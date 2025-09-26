@@ -1,6 +1,7 @@
-using PortfolioApi.Models;
+using Models.Domain.PortfolioAPI;
 
-namespace PortfolioRepositoryInterface;
+
+namespace Repositories.PortfolioAPIInterface;
 
 public interface IPortfolioRepository
 {

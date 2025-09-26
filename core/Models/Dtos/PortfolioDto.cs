@@ -1,6 +1,7 @@
-using TradeApi.Dtos;
+using Models.Dtos.TradeAPI;
 
-namespace PortfolioApi.Dtos;
+
+namespace Models.Dtos.PortfolioApi;
 
 public class PortfolioDto
 {

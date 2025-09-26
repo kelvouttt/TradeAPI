@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using PortfolioApi.Mappings;
-using PortfolioRepositoryInterface;
-using PortfolioApi.Models;
+using Mappings.PortfolioAPI;
+using Repositories.PortfolioAPIInterface;
+using Models.Domain.PortfolioAPI;
 
 
 namespace PortfolioApi.Controllers;

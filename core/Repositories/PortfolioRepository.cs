@@ -1,15 +1,16 @@
 using Microsoft.EntityFrameworkCore;
-using PortfolioApi.Models;
-using PortfolioRepositoryInterface;
-using TradeInterfaceApi.Data;
+using Models.Domain.PortfolioAPI;
+using Repositories.PortfolioAPIInterface;
+using Data.AppDbContext;
 
-namespace PortfolioApi.Repository;
+
+namespace Repositories.PortfolioAPI;
 
 public class PortfolioRepository : IPortfolioRepository
 {
-    private readonly TradeDbContext _context;
+    private readonly AppDbContext _context;
 
-    public PortfolioRepository(TradeDbContext context)
+    public PortfolioRepository(AppDbContext context)
     {
         _context = context;
     }

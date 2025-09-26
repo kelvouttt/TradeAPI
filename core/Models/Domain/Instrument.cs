@@ -1,39 +1,8 @@
-namespace InstrumentApi.Models;
+using Models.Enums.AssetClass;
+using Models.Enums.Exchange;
+using Models.Enums.Currency;
 
-public enum AssetClass
-{
-    Equity,
-    Bond,
-    Futures,
-    Options,
-    Forex,
-    Crypto,
-    ETF
-}
-
-public enum Exchange
-{
-    NYSE,
-    TSE,
-    LSE,
-    NSE,
-    ASX,
-    NASDAQ,
-    SSE,
-    HKEX,
-    Euronext
-}
-
-public enum Currency
-{
-    USD,
-    JPY,
-    AUD,
-    GBP,
-    CNY,
-    HKD,
-    EUR
-}
+namespace Models.Domain.InstrumentAPI;
 
 public class Instrument
 {

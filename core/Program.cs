@@ -1,17 +1,17 @@
 using NameOut;
 using Microsoft.EntityFrameworkCore;
-using TradeInterfaceApi.Data;
-using PortfolioApi.Repository;
-using PortfolioRepositoryInterface;
-using TradeRepositoryInterface;
-using TradeApi.Repository;
+using Data.AppDbContext;
+using Repositories.PortfolioAPIInterface;
+using Repositories.TradeAPIInterface;
+using Repositories.PortfolioAPI;
+using Repositories.TradeAPI;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 var serverVersion = new MariaDbServerVersion(new Version(11, 4));
 
-builder.Services.AddDbContext<TradeDbContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
 	options.UseMySql(
 		builder.Configuration.GetConnectionString("DefaultConnection"),
 		serverVersion));

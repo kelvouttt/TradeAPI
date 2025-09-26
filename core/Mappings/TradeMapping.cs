@@ -1,7 +1,8 @@
-using TradeApi.Models;
-using TradeApi.Dtos;
+using Models.Domain.TradeAPI;
+using Models.Dtos.TradeAPI;
 
-namespace TradeApi.Mappings;
+
+namespace Mappings.TradeAPI;
 
 public static class TradeApiMapping
 {
