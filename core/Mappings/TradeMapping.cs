@@ -11,7 +11,7 @@ public static class TradeApiMapping
         return new TradeDto
         {
             TradeId = trade.TradeId,
-            Instrument = trade.Instrument,
+            Instrument = trade.Instrument?.Symbol,
             Quantity = trade.Quantity,
             Price = trade.Price,
             Counterparty = trade.Counterparty,

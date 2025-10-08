@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Models.Domain.PortfolioAPI;
 using Models.Domain.TradeAPI;
+using Models.Domain.InstrumentAPI;
 
 
 namespace Data.AppDbContext
@@ -11,5 +12,6 @@ namespace Data.AppDbContext
 
         public DbSet<Trade> Trades { get; set; }
         public DbSet<Portfolio> Portfolios { get; set; }
+        public DbSet<Instrument> Instruments { get; set; }
     }
 }

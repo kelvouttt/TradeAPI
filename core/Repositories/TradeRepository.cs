@@ -1,6 +1,7 @@
 using Models.Domain.TradeAPI;
 using Data.AppDbContext;
 using Repositories.TradeAPIInterface;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Repositories.TradeAPI;
@@ -16,14 +17,18 @@ public class TradeRepository : ITradeRepository
 
     public IEnumerable<Trade> GetAll()
     {
-        return _context
-        .Trades
+        return _context.Trades
+        .Include(t => t.Portfolio)
+        .Include(t => t.Instrument)
         .ToList();
     }
 
     public Trade? GetTrade(Guid id)
     {
-        return _context.Trades.FirstOrDefault(t => t.Id == id);
+        return _context.Trades
+        .Include(t => t.Portfolio)
+        .Include(t => t.Instrument)
+        .FirstOrDefault(t => t.Id == id);
     }
 
     public void Add(Trade trade)

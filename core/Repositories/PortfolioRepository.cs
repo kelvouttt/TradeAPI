@@ -20,13 +20,16 @@ public class PortfolioRepository : IPortfolioRepository
         return _context
         .Portfolios
         .Include(p => p.Trades)
+        .ThenInclude(t => t.Instrument)
         .ToList();
     }
 
     public Portfolio? GetPortfolio(Guid id)
     {
-        return _context.Portfolios
+        return _context
+        .Portfolios
         .Include(p => p.Trades)
+        .ThenInclude(t => t.Instrument)
         .FirstOrDefault(p => p.Id == id);
     }
 

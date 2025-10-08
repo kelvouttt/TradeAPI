@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Models.Domain.TradeAPI;
 using Repositories.TradeAPIInterface;
+using Mappings.TradeAPI;
 
 
 namespace TradeInterfaceApi.Controllers;
@@ -20,16 +21,21 @@ public class TradeController : ControllerBase
     public IActionResult GetAllTrades()
     {
         var trades = _repo.GetAll();
-        // var tradeDtos = trades.Select(trade => trade.ToDto()).ToList();
+        var dtoResult = trades.Select(t => t.ToDto()).ToList();
 
-        return Ok(trades);
+        return Ok(dtoResult);
     }
 
     [HttpGet("{id}")]
     public IActionResult GetTrade(Guid id)
     {
         var trade = _repo.GetTrade(id);
-        return Ok(trade);
+        if (trade == null)
+        {
+            return NotFound();
+        }
+        
+        return Ok(trade.ToDto());
     }
 
     [HttpPost]

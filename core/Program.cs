@@ -5,6 +5,8 @@ using Repositories.PortfolioAPIInterface;
 using Repositories.TradeAPIInterface;
 using Repositories.PortfolioAPI;
 using Repositories.TradeAPI;
+using Repositories.InstrumentAPIInterface;
+using Repositories.InterfaceAPI;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,7 @@ builder.Services.AddControllers();
 // Registering the repository
 builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
 builder.Services.AddScoped<ITradeRepository, TradeRepository>();
+builder.Services.AddScoped<IInstrumentRepository, InstrumentRepository>();
 
 var app = builder.Build();
 
