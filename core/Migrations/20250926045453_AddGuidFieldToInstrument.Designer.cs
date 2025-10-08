@@ -4,6 +4,7 @@ using Data.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250926045453_AddGuidFieldToInstrument")]
+    partial class AddGuidFieldToInstrument
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,43 +24,6 @@ namespace core.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
-
-            modelBuilder.Entity("Models.Domain.InstrumentAPI.Instrument", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<decimal>("Ask")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<int>("AssetClass")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Bid")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<int>("Currency")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Exchange")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("LastPrice")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Symbol")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Instruments");
-                });
 
             modelBuilder.Entity("Models.Domain.PortfolioAPI.Portfolio", b =>
                 {
@@ -87,8 +53,9 @@ namespace core.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("InstrumentId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("Instrument")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<Guid>("PortfolioId")
                         .HasColumnType("char(36)");
@@ -108,8 +75,6 @@ namespace core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InstrumentId");
-
                     b.HasIndex("PortfolioId");
 
                     b.ToTable("Trades");
@@ -117,26 +82,13 @@ namespace core.Migrations
 
             modelBuilder.Entity("Models.Domain.TradeAPI.Trade", b =>
                 {
-                    b.HasOne("Models.Domain.InstrumentAPI.Instrument", "Instrument")
-                        .WithMany("Trades")
-                        .HasForeignKey("InstrumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Models.Domain.PortfolioAPI.Portfolio", "Portfolio")
                         .WithMany("Trades")
                         .HasForeignKey("PortfolioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Instrument");
-
                     b.Navigation("Portfolio");
-                });
-
-            modelBuilder.Entity("Models.Domain.InstrumentAPI.Instrument", b =>
-                {
-                    b.Navigation("Trades");
                 });
 
             modelBuilder.Entity("Models.Domain.PortfolioAPI.Portfolio", b =>
